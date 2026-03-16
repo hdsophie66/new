@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>花精、情绪与生活 | 给情绪的一封情书</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --header-bg: #556b2f;
+            --header-text: #fff;
+            --bg-color: #fdfbf7;
+            --text-main: #4a4a4a;
+            --card-bg-1: linear-gradient(135deg, #f8f9fa 0%, #e8f5e9 100%);
+            --card-bg-2: linear-gradient(135deg, #fff3e0 0%, #ffebee 100%);
+            --card-bg-3: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%);
+            --border-radius: 16px;
+            --shadow: 0 8px 24px rgba(0,0,0,0.12);
+            
+            /* 四季主题色 */
+            --spring-color: #81c784;
+            --summer-color: #ffb74d;
+            --autumn-color: #f57c00;
+            --winter-color: #4fc3f7;
+            
+            /* 石楠花色 */
+            --heather-color: #ce93d8;
+            
+            /* 幸福版块新配色 */
+            --happiness-bg: #fff8e1;
+            --happiness-title: #5d4037;
+            --happiness-text: #555;
+            --happiness-border: #ffe0b2;
+        }
+
+        body {
+            font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4e157' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        header {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 { font-weight: 400; letter-spacing: 3px; font-size: 2em; margin: 0; }
+        .subtitle { font-size: 1em; margin-top: 15px; opacity: 0.9; font-weight: 300; }
+        
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px 60px; }
+
+        /* 石楠花卷首语 - 粉紫色花朵 */
+        .intro-quote-box {
+            background: #fff;
+            border-left: 5px solid var(--heather-color);
+            padding: 30px;
+            margin: 40px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            font-style: italic;
+            color: #555;
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        .intro-quote-content {
+            flex: 1;
+        }
+        .intro-quote-content p { margin: 15px 0; line-height: 1.9; }
+        .intro-quote-content p:first-child { 
+            text-indent: 0;
+            margin-top: 0;
+        }
+        .intro-quote-content p:not(:first-child) { 
+            text-indent: 2em;
+        }
+        .intro-quote-content .source { 
+            text-align: right; 
+            font-weight: bold; 
+            color: var(--heather-color); 
+            margin-top: 25px; 
+            display: block; 
+            font-style: normal; 
+            font-size: 0.95em;
+        }
+        .heather-flower-icon {
+            font-size: 3em;
+            flex-shrink: 0;
+            animation: float 3s infinite ease-in-out;
+            color: #ce93d8; /* 粉紫色 */
+        }
+        @keyframes float { 
+            0%, 100% { transform: translateY(0) rotate(0deg); } 
+            50% { transform: translateY(-5px) rotate(5deg); } 
+        }
+
+        .section-title {
+            text-align: center; font-size: 1.5em; color: var(--header-bg);
+            margin: 60px 0 30px; font-weight: bold; position: relative;
+            display: inline-block; left: 50%; transform: translateX(-50%);
+        }
+        .section-title::after {
+            content: ''; display: block; width: 50px; height: 2px;
+            background: #ddd; margin: 15px auto 0;
+        }
+
+        .illustration-card {
+            border-radius: var(--border-radius); box-shadow: var(--shadow);
+            padding: 40px; margin-bottom: 40px; position: relative;
+            overflow: hidden; transition: transform 0.3s ease;
+        }
+        .illustration-card:hover { transform: translateY(-5px); }
+
+        .journey-card { background: var(--card-bg-1); border-left: 5px solid #81c784; }
+        .journey-item { margin-bottom: 25px; position: relative; z-index: 2; }
+        .journey-item strong { color: #2e7d32; display: block; margin-bottom: 8px; font-size: 1.15em; font-weight: bold; }
+        .journey-item p { margin: 0; color: #555; text-align: justify; }
+
+        .summary-box {
+            background: var(--card-bg-2); padding: 40px; border-radius: var(--border-radius);
+            color: #555; font-style: italic; margin-bottom: 40px; line-height: 1.9;
+            position: relative; border: 1px dashed #ffccbc;
+        }
+        .summary-box::before {
+            content: """; font-size: 4em; color: #ffab91; position: absolute;
+            top: -10px; left: 10px; font-family: serif; opacity: 0.3;
+        }
+        
+        .signature-line {
+            margin-top: 25px;
+            text-align: right;
+            font-style: normal;
+            font-weight: bold;
+            color: #556b2f;
+            font-family: "Kaiti", "STKaiti", "楷体", serif;
+            font-size: 1.1em;
+        }
+
+        .tide-quote-text {
+            text-align: center;
+            color: #556b2f;
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin: 40px 0;
+            padding: 0 20px;
+            font-weight: 500;
+        }
+
+        .final-quote { 
+            text-align: center; 
+            color: #556b2f;
+            font-weight: bold; 
+            font-size: 1.1em; 
+            margin: 40px 0; 
+            padding: 0 20px; 
+        }
+
+        .letter-card {
+            background: var(--card-bg-3);
+            padding: 50px 40px; 
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow); 
+            position: relative; 
+            margin-bottom: 60px;
+            border: 1px solid #f8bbd0;
+            animation: breathe 4s infinite ease-in-out;
+        }
+        
+        @keyframes breathe { 
+            0%, 100% { transform: scale(1); } 
+            50% { transform: scale(1.01); } 
+        }
+
+        .flower-stamp {
+            position: absolute; top: 20px; right: 20px; font-size: 3em; opacity: 0.8;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        .letter-title { text-align: center; font-size: 1.5em; color: #880e4f; margin-bottom: 40px; font-weight: bold; position: relative; }
+        .letter-title::after { content: ''; display: block; width: 30px; height: 2px; background: #f48fb1; margin: 10px auto 0; }
+        .letter-content { font-family: "Kaiti", "STKaiti", serif; font-size: 1.05em; color: #444; line-height: 2; position: relative; z-index: 2; }
+        .letter-signature { text-align: right; margin-top: 40px; font-weight: bold; color: #666; }
+        .letter-footer { text-align: center; margin-top: 30px; color: #999; font-size: 0.9em; font-style: italic; }
+
+        .tree-of-seasons {
+            background: #fff; border-radius: var(--border-radius); box-shadow: var(--shadow);
+            padding: 30px; margin-bottom: 60px; position: relative; 
+            display: flex; flex-direction: column; gap: 30px;
+        }
+        
+        .season-column {
+            background: #fafafa;
+            border-radius: 12px;
+            padding: 25px;
+            border-top: 5px solid #ccc;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        .season-column:hover { transform: translateY(-3px); }
+
+        .spring-col { border-color: var(--spring-color); background: linear-gradient(to bottom, #e8f5e9, #fff); }
+        .summer-col { border-color: var(--summer-color); background: linear-gradient(to bottom, #fff3e0, #fff); }
+        .autumn-col { border-color: var(--autumn-color); background: linear-gradient(to bottom, #fbe9e7, #fff); }
+        .winter-col { border-color: var(--winter-color); background: linear-gradient(to bottom, #e1f5fe, #fff); }
+
+        .bubble-title { 
+            font-weight: bold; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; 
+            font-size: 1.2em; color: #333;
+        }
+        .flower-list { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+        .flower-list li { 
+            background: rgba(255,255,255,0.8); padding: 8px 15px; 
+            border-radius: 20px; font-size: 0.95em; color: #555; 
+            border: 1px solid #eee; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .happiness-card {
+            background: var(--happiness-bg);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            margin: 60px 0;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: flex-start;
+            gap: 25px;
+            border: 1px solid var(--happiness-border);
+            position: relative;
+            overflow: hidden;
+        }
+        .happiness-icon {
+            font-size: 3.5em;
+            flex-shrink: 0;
+            animation: spin-slow 10s infinite linear;
+        }
+        @keyframes spin-slow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .happiness-content h3 {
+            margin-top: 0;
+            color: var(--happiness-title);
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .happiness-content p {
+            margin: 0;
+            color: var(--happiness-text);
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .happiness-source {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #888;
+            font-style: italic;
+            text-align: right;
+        }
+
+        .body-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 60px; }
+        .body-item { background: #fff; padding: 30px; border-radius: var(--border-radius); text-align: center; box-shadow: var(--shadow); border: 1px solid #eee; }
+        .body-icon { font-size: 3em; margin-bottom: 15px; display: block; }
+        .body-h3 { margin: 15px 0; color: #333; font-size: 1.2em; }
+        .body-p { font-size: 0.95em; color: #666; line-height: 1.6; }
+
+        .snapshot-section { text-align: center; margin: 60px 0; }
+
+        .snapshot-wrapper { display: flex; justify-content: center; margin-bottom: 20px; }
+        .snapshot-area {
+            background: #fff; width: 100%; max-width: 600px; padding: 40px;
+            border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border: 1px solid #eee; position: relative; box-sizing: border-box; text-align: left;
+        }
+        .snapshot-header {
+            display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 2px solid var(--header-bg); padding-bottom: 15px; margin-bottom: 25px;
+        }
+        .snapshot-logo { font-weight: bold; color: var(--header-bg); font-size: 1.1em; display: flex; align-items: center; gap: 8px; }
+        .snapshot-logo span { font-size: 1.4em; }
+        .snapshot-date { font-size: 0.85em; color: #999; font-family: monospace; }
+        .snapshot-title { text-align: center; font-size: 1.3em; color: #333; margin-bottom: 25px; font-weight: bold; }
+        .snapshot-row { margin-bottom: 20px; }
+        .snapshot-label { font-size: 0.85em; color: #888; font-weight: bold; margin-bottom: 8px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .snapshot-input {
+            width: 100%;
+            min-height: 40px; 
+            padding: 8px 10px;
+            border: none;
+            border-bottom: 1px dashed #ccc;
+            background: transparent;
+            font-family: "Kaiti", "STKaiti", serif;
+            font-size: 1.1em;
+            color: #333;
+            outline: none;
+            box-sizing: border-box;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            cursor: text;
+            display: block;
+            height: auto; 
+        }
+
+        .snapshot-tip {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
+            font-size: 0.85em;
+            color: #999;
+            line-height: 1.6;
+        }
+        .snapshot-tip strong { color: #d4a017; font-weight: bold; }
+
+        .snapshot-footer { margin-top: 15px; text-align: center; font-size: 0.8em; color: #aaa; padding-top: 10px; }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .save-btn, .share-btn {
+            color: white; border: none; padding: 15px 30px; font-size: 1.1em;
+            border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease; font-weight: bold; letter-spacing: 1px;
+            display: inline-flex; align-items: center; gap: 10px;
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, #ffab91 0%, #ff8a65 100%);
+            box-shadow: 0 4px 15px rgba(255, 138, 101, 0.4);
+        }
+        .save-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 138, 101, 0.6); }
+
+        .share-btn {
+            background: linear-gradient(135deg, #4fc3f7 0%, #29b6f6 100%);
+            box-shadow: 0 4px 15px rgba(41, 182, 246, 0.4);
+            display: none; 
+        }
+        .share-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(41, 182, 246, 0.6); }
+        .share-btn:active { transform: translateY(1px); }
+
+        footer { text-align: center; margin-top: 60px; color: #999; font-size: 0.85em; padding-bottom: 40px; }
+
+        @media (max-width: 768px) {
+            .tree-of-seasons { padding: 15px; gap: 20px; }
+            .season-column { padding: 20px; }
+            .bubble-title { font-size: 1.1em; }
+            .flower-list li { font-size: 0.85em; padding: 6px 12px; }
+            
+            .snapshot-area { padding: 25px; }
+            h1 { font-size: 1.6em; }
+            .illustration-card { padding: 25px; }
+            .action-buttons { flex-direction: column; align-items: center; }
+            .save-btn, .share-btn { width: 90%; justify-content: center; }
+            
+            .intro-quote-box { flex-direction: column; align-items: center; text-align: center; padding: 20px; }
+            .heather-flower-icon { margin-bottom: 15px; animation: none; transform: scale(1.2); }
+            .intro-quote-content p { text-indent: 0; }
+            
+            .happiness-card { flex-direction: column; align-items: center; text-align: center; padding: 30px 20px; }
+            .happiness-icon { margin-bottom: 15px; animation: none; transform: scale(1.2); }
+            .happiness-source { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>花精 · 情绪 · 生活</h1>
+    <div class="subtitle">用一年的时间，与 38 种花精相遇在四季流转中，照见真实的自己</div>
+</header>
+
+<div class="container">
+
+    <!-- 卷首语：石楠花精与生命合一 + 粉紫色花朵 -->
+    <div class="intro-quote-box">
+        <div class="heather-flower-icon">🌸</div>  <!-- 改为粉紫色花朵 -->
+        <div class="intro-quote-content">
+            <p>今天早上天气极好，天空蔚蓝，石楠粉紫色的花瓣闪耀着，天气温暖又晴朗。这里完全没有人，一点人烟都没有。虽有几匹野马和羊，几只乌鸦对叫，我渐渐安静下来，宁静感越来越扩张，填满整个空旷的山谷，整个空间充满了温暖、璀璨而生意盎然的气息。</p>
+            <p>这种怡然自得的愉悦感非常强大，难以用语言形容。我想这是石楠花精与生命合为一体，我感到这种结合存在于所有生物之中...</p>
+            <p>在所有生物的精神里，存在于石楠与万物之中。所有植物都知道如何与自我合为一体，因为它们与这种精神结合在一起。</p>
+            <p>但人类通常却办不到。有些人似乎无法与内在的精神联结，因此感到迷失与困惑，这就是石楠的讯息，负面状态来自寂寞与隔离感，她的正面状态则是释放、与万物合为一体，没有边界或限制。</p>
+            <p>每个人都有“共同的心灵本质”，那是隐藏在人类之中的精神。若要接触这道精神，我们只要接近它，而不是远离它。</p>
+            <span class="source">— Julian Barnard [Bach Flower Remedies Form And Function]</span>
+        </div>
+    </div>
+
+    <div class="section-title">情绪能为我做什么</div>
+    <div style="text-align: center; color: #888; margin-bottom: 20px; font-size: 0.9em;">—— 拨开层层迷障，看见自己</div>
+    
+    <div class="illustration-card journey-card">
+        <p style="margin-bottom: 20px; color: #666;">回顾十八年的自我疗愈和情绪工作，对于情绪和自我的认识，大致可以分为这样的几个阶段。</p>
+        <div class="journey-item"><strong>第一个阶段，混乱与清理。</strong><p>各种情绪在使用花精的过程出现身体的排负反应，类似病症，比如鼻炎，比如说不出话，或者身体某处的疼痛，胀气，没有更多干预，身体渐渐平安度过。</p></div>
+        <div class="journey-item"><strong>第二个阶段，工作更换与走向自我探索。</strong><p>从国企离开来到成都，做花精客服工作，每天听来自不同人的故事和相似的情绪困扰，给出花精配方，见证变化。</p></div>
+        <div class="journey-item"><strong>第三个阶段，深入对话和个体疗愈。</strong><p>做自己的品牌『芬芳时』，一边为别人提供咨询服务，一边继续自我疗愈，对情绪的探索更趋于向内走。</p></div>
+        <div class="journey-item"><strong>第四个阶段，向外走。</strong><p>看见各种经历和故事里的脉络联系，从旧的认知与习惯中，打开新的视角。</p></div>
+    </div>
+
+    <!-- 替换后的段落 -->
+    <div class="summary-box">
+        可以想见的是，接下来还会有新的阶段。一路走过来，情绪能为自己做什么，我最大的感受是，认出情绪怎样影响自己和别人时，我就从情绪里走出来了些，从被动的不知所措，转向了学习。不是对抗，也不太是降伏什么~比较是一种耐心的打磨自己，既潜入生命深处，清理浮躁和隔阂，又从每一经历中获取有用的经验，汲取希望的明确感，它不是来自于别人的要求或比较，是一次次的认出自己，为自己点火，往前走。
+        <div class="signature-line">杨慧芳（花雕）</div>
+    </div>
+
+    <div class="tide-quote-text">
+        “每个人都会有自己与情绪的故事，情绪的存在，是羁绊还是推动，是滋养还是损耗，都是由自己来回答的。”
+    </div>
+
+    <div class="section-title">给情绪的一封信</div>
+    <div class="illustration-card letter-card">
+        <div class="flower-stamp">🌸</div>
+        <div class="letter-title">亲爱的急躁感：</div>
+        <div class="letter-content">
+            <p>我今天认出你了，真是高兴。</p>
+            <p>因为你的出现，我看见了自己对于当下的疏忽。那些被急着打断的瞬间，那些急于看到结果却忘记好好感受的每一刻……</p>
+            <p>以前我总是想推开你，但今天，我想谢谢你提醒我：慢下来，呼吸，花开需要时间。</p>
+        </div>
+        <div class="letter-signature">—— 写于春日午后</div>
+        <div class="letter-footer">“在这里，我们不评判情绪，我们看见它，拥抱它。”</div>
+    </div>
+
+    <div class="section-title">三百六十五天的疗愈旅程</div>
+    <div class="tree-of-seasons">
+        <div class="season-column spring-col">
+            <div class="bubble-title">🌸 春：萌发与希望</div>
+            <ul class="flower-list"><li>樱花</li><li>火烧杨</li><li>榆树</li><li>荆豆</li><li>橄榄</li><li>山毛榉</li><li>栗苞</li><li>海棠</li><li>杨柳</li><li>落叶松</li></ul>
+        </div>
+        <div class="season-column summer-col">
+            <div class="bubble-title">☀️ 夏：盛放与热情</div>
+            <ul class="flower-list"><li>松树</li><li>白栗</li><li>橡树</li><li>鹅耳枥</li><li>核桃</li><li>圣星百合</li><li>葡萄</li><li>矢车菊</li><li>冬青</li></ul>
+        </div>
+        <div class="season-column autumn-col">
+            <div class="bubble-title">🍂 秋：沉淀与释放</div>
+            <ul class="flower-list"><li>美洲赫顿草</li><li>红栗</li><li>芥子</li><li>野蔷薇</li><li>岩水</li><li>沟酸浆</li><li>龙芽草</li><li>岩蔷薇</li><li>忍冬</li><li>西洋栗</li></ul>
+        </div>
+        <div class="season-column winter-col">
+            <div class="bubble-title">❄️ 冬：内省与宁静</div>
+            <ul class="flower-list"><li>龙胆草</li><li>硬花草</li><li>马鞭草</li><li>野燕麦</li><li>菊苣</li><li>凤仙花</li><li>铁线莲</li><li>紫金莲</li><li>石楠</li></ul>
+        </div>
+    </div>
+
+    <div class="happiness-card">
+        <div class="happiness-icon">☀️</div>
+        <div class="happiness-content">
+            <h3>“我们可以通过自己的幸福感来判断自己的健康。”</h3>
+            <div class="happiness-source">— Dr. Bach [The original writings]</div>
+            <p style="margin-top: 15px;">健康并不是说“没病”，它更像是身心的一种和谐状态。幸福感，是这种和谐最直接的体现——她/他经过了很多事，有磨损，有得失，却又是一个明亮的，丰盈的生命状态。</p>
+        </div>
+    </div>
+
+    <div class="section-title">🌿 身体触感觉察</div>
+    <div class="body-grid">
+        <div class="body-item"><span class="body-icon">🤏</span><h3 class="body-h3">发紧 / 僵硬</h3><p class="body-p">肩膀耸起？拳头紧握？<br>也许你在防御焦虑。</p></div>
+        <div class="body-item"><span class="body-icon">🔥</span><h3 class="body-h3">发热 / 躁动</h3><p class="body-p">脸颊发烫？坐立难安？<br>也许藏着未表达的愤怒。</p></div>
+        <div class="body-item"><span class="body-icon">🌫️</span><h3 class="body-h3">疼痛 / 沉重</h3><p class="body-p">胸口闷痛？四肢沉重？<br>试着拥抱那份悲伤。</p></div>
+    </div>
+
+    <div class="section-title">🌿 今日配方与觉察</div>
+
+    <div class="snapshot-section">
+        <div class="snapshot-wrapper">
+            <div class="snapshot-area" id="snapshotCard">
+                <div class="snapshot-header">
+                    <div class="snapshot-logo"><span>🌿</span> 花精与生活</div>
+                    <div class="snapshot-date" id="currentDate"></div>  <!-- 留空，JS自动填充 -->
+                </div>
+                <div class="snapshot-title">今日配方与觉察日记</div>
+                
+                <div class="snapshot-row">
+                    <label class="snapshot-label">今日选用的花精 (Today's Essence)</label>
+                    <div class="snapshot-input" id="inputEssence" contenteditable="true"></div>
+                </div>
+
+                <div class="snapshot-row">
+                    <label class="snapshot-label">此刻的情绪觉察 (My Feeling)</label>
+                    <div class="snapshot-input" id="inputFeeling" contenteditable="true"></div>
+                </div>
+
+                <div class="snapshot-row">
+                    <label class="snapshot-label">使用后的感受 (Reflection)</label>
+                    <div class="snapshot-input" id="inputReflection" contenteditable="true"></div>
+                </div>
+
+                <div class="snapshot-tip">
+                    💡 <strong>操作指南：</strong> 直接在虚线处点击输入文字，支持回车换行。点击粉色按钮生成完美图片~
+                </div>
+
+                <div class="snapshot-footer">© 『芬芳时』花精与生活社群 | 愿你每一天都和自己在一起</div>
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <button class="save-btn" id="saveBtn" onclick="downloadSnapshot()">
+                <span>💾</span> 存入我的情绪日记
+            </button>
+            <button class="share-btn" id="shareBtn" onclick="shareImage()">
+                <span>📱</span> 一键分享
+            </button>
+        </div>
+    </div>
+
+    <footer><p>© 『芬芳时』花精与生活社群 | 愿你每一天都和自己在一起</p></footer>
+</div>
+
+<script>
+    // 自动更新日期
+    (function setTodayDate() {
+        const dateElement = document.getElementById('currentDate');
+        if (dateElement) {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            dateElement.textContent = `${year}.${month}.${day}`;
+        }
+    })();
+
+    let generatedImageURL = null;
+
+    // 初始化输入框
+    window.addEventListener('DOMContentLoaded', () => {
+        const inputs = document.querySelectorAll('.snapshot-input');
+        inputs.forEach(input => {
+            input.innerHTML = '&nbsp;';
+            input.addEventListener('focus', function() {
+                if (this.innerHTML === '&nbsp;' || this.innerText.trim() === '') {
+                    this.innerHTML = '';
+                }
+            });
+            input.addEventListener('blur', function() {
+                if (!this.innerText.trim()) {
+                    this.innerHTML = '&nbsp;';
+                }
+            });
+        });
+    });
+
+    function downloadSnapshot() {
+        const element = document.getElementById('snapshotCard');
+        const btn = document.getElementById('saveBtn');
+        const shareBtn = document.getElementById('shareBtn');
+        
+        if (!element || !window.html2canvas) { 
+            alert('准备中...请确保网络通畅。'); 
+            return; 
+        }
+
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<span>⏳</span> 正在生成...';
+        btn.style.opacity = '0.7';
+        btn.disabled = true;
+        shareBtn.style.display = 'none';
+
+        html2canvas(element, {
+            scale: 3,
+            backgroundColor: '#ffffff',
+            useCORS: true,
+            logging: false,
+            windowWidth: element.scrollWidth,
+            windowHeight: element.scrollHeight
+        }).then(canvas => {
+            generatedImageURL = canvas.toDataURL('image/png');
+            
+            // 下载图片
+            const link = document.createElement('a');
+            link.download = `芬芳时_花精日记_${dateElement.textContent.replace(/\./g, '')}.png`;
+            link.href = generatedImageURL;
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            btn.innerHTML = '<span>✅</span> 已生成，请查看下载文件夹';
+            btn.style.opacity = '1';
+            btn.disabled = false;
+            shareBtn.style.display = 'inline-flex';
+            
+            setTimeout(() => {
+                alert('✨ 图片已生成！\n\n📥 请查看您的“下载管理”或“文件管理器”。\n\n如果图片没有自动保存到相册，请点击下方【一键分享】按钮。');
+            }, 200);
+
+            setTimeout(() => { 
+                btn.innerHTML = '<span>💾</span> 存入我的情绪日记'; 
+            }, 4000);
+        }).catch(err => {
+            console.error(err);
+            alert('生成失败，请重试');
+            btn.innerHTML = originalText;
+            btn.style.opacity = '1';
+            btn.disabled = false;
+        });
+    }
+
+    async function shareImage() {
+        if (!generatedImageURL) {
+            alert('请先生成图片哦~');
+            return;
+        }
+
+        try {
+            const response = await fetch(generatedImageURL);
+            const blob = await response.blob();
+            const file = new File([blob], "芬芳时_花精日记.png", { type: "image/png" });
+
+            if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                await navigator.share({
+                    title: '芬芳时·花精日记',
+                    text: '这是我今日的花精觉察日记 🌿',
+                    files: [file]
+                });
+            } else {
+                try {
+                    const item = new ClipboardItem({ "image/png": blob });
+                    await navigator.clipboard.write([item]);
+                    alert('📋 图片已复制到剪贴板！您可以粘贴到微信或相册。');
+                } catch (clipErr) {
+                    alert('📥 无法自动分享，请在浏览器中长按图片，选择“保存到相册”。');
+                    window.open(generatedImageURL, '_blank');
+                }
+            }
+        } catch (err) {
+            console.log('分享失败', err);
+            alert('分享失败，请手动保存图片。');
+            window.open(generatedImageURL, '_blank');
+        }
+    }
+</script>
+</body>
+</html>
