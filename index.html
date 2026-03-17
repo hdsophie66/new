@@ -502,7 +502,58 @@
         </div>
         
         <div class="action-buttons">
-            <button class="save-btn" id="saveBtn" onclick="downloadSnapshot()">
+            <button class="save-btn" id="saveBtn" onclick="function downloadSnapshot() {
+    const element = document.getElementById('snapshotCard');
+    const btn = document.getElementById('saveBtn');
+    const shareBtn = document.getElementById('shareBtn');
+    
+    if (!element || !window.html2canvas) { 
+        alert('页面尚未加载完成，请稍后重试'); 
+        return; 
+    }
+
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<span>⏳</span> 正在生成图片...';
+    btn.style.opacity = '0.7';
+    btn.disabled = true;
+    shareBtn.style.display = 'none';
+
+    // 核心修改：延迟 300ms 确保 DOM 完全稳定
+    setTimeout(() => {
+        html2canvas(element, {
+            scale: 2,                     // 2倍清晰度（太大容易卡，2够用）
+            backgroundColor: '#ffffff',    // 强制白底，避免透明
+            allowTaint: false,
+            useCORS: true,
+            logging: false,
+            windowWidth: element.scrollWidth,
+            windowHeight: element.scrollHeight
+        }).then(canvas => {
+            // 转换为图片并下载
+            const image = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.download = `芬芳时_花精日记_${new Date().toISOString().slice(0,10)}.png`;
+            link.href = image;
+            link.click();
+
+            // 恢复按钮状态
+            btn.innerHTML = '<span>✅</span> 保存成功';
+            btn.style.opacity = '1';
+            btn.disabled = false;
+            shareBtn.style.display = 'inline-flex';
+
+            setTimeout(() => {
+                btn.innerHTML = '<span>💾</span> 存入我的情绪日记';
+            }, 2000);
+        }).catch(err => {
+            console.error('生成失败:', err);
+            alert('图片生成失败，可能是页面元素太多，试试刷新后重试');
+            btn.innerHTML = originalText;
+            btn.style.opacity = '1';
+            btn.disabled = false;
+        });
+    }, 300); // 延迟300毫秒执行
+}()">
                 <span>💾</span> 存入我的情绪日记
             </button>
             <button class="share-btn" id="shareBtn" onclick="shareImage()">
