@@ -17,16 +17,13 @@
             --border-radius: 16px;
             --shadow: 0 8px 24px rgba(0,0,0,0.12);
             
-            /* 四季主题色 */
             --spring-color: #81c784;
             --summer-color: #ffb74d;
             --autumn-color: #f57c00;
             --winter-color: #4fc3f7;
             
-            /* 石楠花色 */
             --heather-color: #ce93d8;
             
-            /* 幸福版块新配色 */
             --happiness-bg: #fff8e1;
             --happiness-title: #5d4037;
             --happiness-text: #555;
@@ -57,7 +54,6 @@
         
         .container { max-width: 900px; margin: 0 auto; padding: 0 20px 60px; }
 
-        /* 石楠花卷首语 - 粉紫色花朵 */
         .intro-quote-box {
             background: #fff;
             border-left: 5px solid var(--heather-color);
@@ -96,7 +92,7 @@
             font-size: 3em;
             flex-shrink: 0;
             animation: float 3s infinite ease-in-out;
-            color: #ce93d8; /* 粉紫色 */
+            color: #ce93d8;
         }
         @keyframes float { 
             0%, 100% { transform: translateY(0) rotate(0deg); } 
@@ -384,9 +380,8 @@
 
 <div class="container">
 
-    <!-- 卷首语：石楠花精与生命合一 + 粉紫色花朵 -->
     <div class="intro-quote-box">
-        <div class="heather-flower-icon">🌸</div>  <!-- 改为粉紫色花朵 -->
+        <div class="heather-flower-icon">🌸</div>
         <div class="intro-quote-content">
             <p>今天早上天气极好，天空蔚蓝，石楠粉紫色的花瓣闪耀着，天气温暖又晴朗。这里完全没有人，一点人烟都没有。虽有几匹野马和羊，几只乌鸦对叫，我渐渐安静下来，宁静感越来越扩张，填满整个空旷的山谷，整个空间充满了温暖、璀璨而生意盎然的气息。</p>
             <p>这种怡然自得的愉悦感非常强大，难以用语言形容。我想这是石楠花精与生命合为一体，我感到这种结合存在于所有生物之中...</p>
@@ -408,7 +403,6 @@
         <div class="journey-item"><strong>第四个阶段，向外走。</strong><p>看见各种经历和故事里的脉络联系，从旧的认知与习惯中，打开新的视角。</p></div>
     </div>
 
-    <!-- 替换后的段落 -->
     <div class="summary-box">
         可以想见的是，接下来还会有新的阶段。一路走过来，情绪能为自己做什么，我最大的感受是，认出情绪怎样影响自己和别人时，我就从情绪里走出来了些，从被动的不知所措，转向了学习。不是对抗，也不太是降伏什么~比较是一种耐心的打磨自己，既潜入生命深处，清理浮躁和隔阂，又从每一经历中获取有用的经验，汲取希望的明确感，它不是来自于别人的要求或比较，是一次次的认出自己，为自己点火，往前走。
         <div class="signature-line">杨慧芳（花雕）</div>
@@ -474,7 +468,7 @@
             <div class="snapshot-area" id="snapshotCard">
                 <div class="snapshot-header">
                     <div class="snapshot-logo"><span>🌿</span> 花精与生活</div>
-                    <div class="snapshot-date" id="currentDate"></div>  <!-- 留空，JS自动填充 -->
+                    <div class="snapshot-date" id="currentDate"></div>
                 </div>
                 <div class="snapshot-title">今日配方与觉察日记</div>
                 
@@ -484,7 +478,7 @@
                 </div>
 
                 <div class="snapshot-row">
-                    <label class="snapshot-label">此刻的身心觉察 (My Feeling)</label>
+                    <label class="snapshot-label">此刻的情绪觉察 (My Feeling)</label>
                     <div class="snapshot-input" id="inputFeeling" contenteditable="true"></div>
                 </div>
 
@@ -502,113 +496,8 @@
         </div>
         
         <div class="action-buttons">
-           <button class="save-btn" id="saveBtn" onclick="downloadSnapshot()">
-    <span>💾</span> 存入我的情绪日记
-</button>
-    const element = document.getElementById('snapshotCard');
-    const btn = document.getElementById('saveBtn');
-    
-    // 1. 检查元素是否存在
-    if (!element) {
-        alert('错误：找不到卡片元素 (snapshotCard)');
-        return;
-    }
-    
-    if (!window.html2canvas) {
-        alert('错误：html2canvas 库未加载');
-        return;
-    }
-
-    // 2. 按钮状态改为“生成中”
-    const originalText = btn.innerHTML;
-    btn.innerHTML = '⏳ 生成中...';
-    btn.disabled = true;
-
-    // 3. 尝试生成图片，强制显示错误
-    try {
-        html2canvas(element, {
-            scale: 2,
-            backgroundColor: '#ffffff',
-            allowTaint: false,
-            useCORS: true,
-            logging: true,          // 打开日志，便于调试
-        }).then(canvas => {
-            // 4. 生成图片成功
-            const image = canvas.toDataURL('image/png');
-            const link = document.createElement('a');
-            link.download = '花精日记_' + new Date().toISOString().slice(0,10) + '.png';
-            link.href = image;
-            link.click();
-            
-            alert('✅ 图片已生成，请查看下载文件夹');
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        }).catch(err => {
-            // 5. 明确显示错误
-            console.error('html2canvas 错误:', err);
-            alert('生成失败，错误信息已打印到控制台 (F12 → Console)');
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        });
-    } catch (err) {
-        // 6. 捕获同步错误
-        alert('执行出错：' + err.message);
-        btn.innerHTML = originalText;
-        btn.disabled = false;
-    }
-}
-}() {
-    const element = document.getElementById('snapshotCard');
-    const btn = document.getElementById('saveBtn');
-    const shareBtn = document.getElementById('shareBtn');
-    
-    if (!element || !window.html2canvas) { 
-        alert('页面尚未加载完成，请稍后重试'); 
-        return; 
-    }
-
-    const originalText = btn.innerHTML;
-    btn.innerHTML = '<span>⏳</span> 正在生成图片...';
-    btn.style.opacity = '0.7';
-    btn.disabled = true;
-    shareBtn.style.display = 'none';
-
-    // 核心修改：延迟 300ms 确保 DOM 完全稳定
-    setTimeout(() => {
-        html2canvas(element, {
-            scale: 2,                     // 2倍清晰度（太大容易卡，2够用）
-            backgroundColor: '#ffffff',    // 强制白底，避免透明
-            allowTaint: false,
-            useCORS: true,
-            logging: false,
-            windowWidth: element.scrollWidth,
-            windowHeight: element.scrollHeight
-        }).then(canvas => {
-            // 转换为图片并下载
-            const image = canvas.toDataURL('image/png');
-            const link = document.createElement('a');
-            link.download = `芬芳时_花精日记_${new Date().toISOString().slice(0,10)}.png`;
-            link.href = image;
-            link.click();
-
-            // 恢复按钮状态
-            btn.innerHTML = '<span>✅</span> 保存成功';
-            btn.style.opacity = '1';
-            btn.disabled = false;
-            shareBtn.style.display = 'inline-flex';
-
-            setTimeout(() => {
-                btn.innerHTML = '<span>💾</span> 存入我的情绪日记';
-            }, 2000);
-        }).catch(err => {
-            console.error('生成失败:', err);
-            alert('图片生成失败，可能是页面元素太多，试试刷新后重试');
-            btn.innerHTML = originalText;
-            btn.style.opacity = '1';
-            btn.disabled = false;
-        });
-    }, 300); // 延迟300毫秒执行
-}()">
+            <!-- 这一行是关键：onclick 里面只有 downloadSnapshot()，没有多余的东西 -->
+            <button class="save-btn" id="saveBtn" onclick="downloadSnapshot()">
                 <span>💾</span> 存入我的情绪日记
             </button>
             <button class="share-btn" id="shareBtn" onclick="shareImage()">
@@ -653,60 +542,59 @@
         });
     });
 
+    // 正确的 downloadSnapshot 函数
     function downloadSnapshot() {
         const element = document.getElementById('snapshotCard');
         const btn = document.getElementById('saveBtn');
-        const shareBtn = document.getElementById('shareBtn');
         
-        if (!element || !window.html2canvas) { 
-            alert('准备中...请确保网络通畅。'); 
-            return; 
+        // 1. 检查元素是否存在
+        if (!element) {
+            alert('错误：找不到卡片元素 (snapshotCard)');
+            return;
+        }
+        
+        if (!window.html2canvas) {
+            alert('错误：html2canvas 库未加载');
+            return;
         }
 
+        // 2. 按钮状态改为“生成中”
         const originalText = btn.innerHTML;
-        btn.innerHTML = '<span>⏳</span> 正在生成...';
-        btn.style.opacity = '0.7';
+        btn.innerHTML = '⏳ 生成中...';
         btn.disabled = true;
-        shareBtn.style.display = 'none';
 
-        html2canvas(element, {
-            scale: 3,
-            backgroundColor: '#ffffff',
-            useCORS: true,
-            logging: false,
-            windowWidth: element.scrollWidth,
-            windowHeight: element.scrollHeight
-        }).then(canvas => {
-            generatedImageURL = canvas.toDataURL('image/png');
-            
-            // 下载图片
-            const link = document.createElement('a');
-            link.download = `芬芳时_花精日记_${dateElement.textContent.replace(/\./g, '')}.png`;
-            link.href = generatedImageURL;
-            link.style.display = 'none';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-
-            btn.innerHTML = '<span>✅</span> 已生成，请查看下载文件夹';
-            btn.style.opacity = '1';
-            btn.disabled = false;
-            shareBtn.style.display = 'inline-flex';
-            
-            setTimeout(() => {
-                alert('✨ 图片已生成！\n\n📥 请查看您的“下载管理”或“文件管理器”。\n\n如果图片没有自动保存到相册，请点击下方【一键分享】按钮。');
-            }, 200);
-
-            setTimeout(() => { 
-                btn.innerHTML = '<span>💾</span> 存入我的情绪日记'; 
-            }, 4000);
-        }).catch(err => {
-            console.error(err);
-            alert('生成失败，请重试');
+        // 3. 尝试生成图片
+        try {
+            html2canvas(element, {
+                scale: 2,
+                backgroundColor: '#ffffff',
+                allowTaint: false,
+                useCORS: true,
+                logging: true,
+            }).then(canvas => {
+                // 4. 生成图片成功
+                const image = canvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.download = '花精日记_' + new Date().toISOString().slice(0,10) + '.png';
+                link.href = image;
+                link.click();
+                
+                alert('✅ 图片已生成，请查看下载文件夹');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }).catch(err => {
+                // 5. 明确显示错误
+                console.error('html2canvas 错误:', err);
+                alert('❌ 生成失败，错误信息已打印到控制台 (F12 → Console)');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
+        } catch (err) {
+            // 6. 捕获同步错误
+            alert('❌ 执行出错: ' + err.message);
             btn.innerHTML = originalText;
-            btn.style.opacity = '1';
             btn.disabled = false;
-        });
+        }
     }
 
     async function shareImage() {
