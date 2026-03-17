@@ -502,7 +502,59 @@
         </div>
         
         <div class="action-buttons">
-            <button class="save-btn" id="saveBtn" onclick="function downloadSnapshot() {
+            <button class="save-btn" id="saveBtn" onclick="function function downloadSnapshot() {
+    const element = document.getElementById('snapshotCard');
+    const btn = document.getElementById('saveBtn');
+    
+    // 1. 检查元素是否存在
+    if (!element) {
+        alert('错误：找不到卡片元素 (snapshotCard)');
+        return;
+    }
+    
+    if (!window.html2canvas) {
+        alert('错误：html2canvas 库未加载');
+        return;
+    }
+
+    // 2. 按钮状态改为“生成中”
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '⏳ 生成中...';
+    btn.disabled = true;
+
+    // 3. 尝试生成图片，强制显示错误
+    try {
+        html2canvas(element, {
+            scale: 2,
+            backgroundColor: '#ffffff',
+            allowTaint: false,
+            useCORS: true,
+            logging: true,          // 打开日志，便于调试
+        }).then(canvas => {
+            // 4. 生成图片成功
+            const image = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.download = '花精日记_' + new Date().toISOString().slice(0,10) + '.png';
+            link.href = image;
+            link.click();
+            
+            alert('✅ 图片已生成，请查看下载文件夹');
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }).catch(err => {
+            // 5. 明确显示错误
+            console.error('html2canvas 错误:', err);
+            alert('生成失败，错误信息已打印到控制台 (F12 → Console)');
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        });
+    } catch (err) {
+        // 6. 捕获同步错误
+        alert('执行出错：' + err.message);
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }
+}() {
     const element = document.getElementById('snapshotCard');
     const btn = document.getElementById('saveBtn');
     const shareBtn = document.getElementById('shareBtn');
