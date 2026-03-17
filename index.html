@@ -375,7 +375,7 @@
 
 <header>
     <h1>花精 · 情绪 · 生活</h1>
-    <div class="subtitle">用一年的时间，与 38 种花精相遇在四季流转中，照见真实的自己</div>
+    <div class="subtitle">用一年的时间，与 38种花精相遇，在四季流转中，照见真实的自己</div>
 </header>
 
 <div class="container">
@@ -478,7 +478,7 @@
                 </div>
 
                 <div class="snapshot-row">
-                    <label class="snapshot-label">此刻的情绪觉察 (My Feeling)</label>
+                    <label class="snapshot-label">此刻的身心觉察 (My Feeling)</label>
                     <div class="snapshot-input" id="inputFeeling" contenteditable="true"></div>
                 </div>
 
@@ -544,92 +544,61 @@
 
     // 正确的 downloadSnapshot 函数
     function downloadSnapshot() {
-        const element = document.getElementById('snapshotCard');
-        const btn = document.getElementById('saveBtn');
-        
-        // 1. 检查元素是否存在
-        if (!element) {
-            alert('错误：找不到卡片元素 (snapshotCard)');
-            return;
-        }
-        
-        if (!window.html2canvas) {
-            alert('错误：html2canvas 库未加载');
-            return;
-        }
-
-        // 2. 按钮状态改为“生成中”
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '⏳ 生成中...';
-        btn.disabled = true;
-
-        // 3. 尝试生成图片
-        try {
-            html2canvas(element, {
-                scale: 2,
-                backgroundColor: '#ffffff',
-                allowTaint: false,
-                useCORS: true,
-                logging: true,
-            }).then(canvas => {
-                // 4. 生成图片成功
-                const image = canvas.toDataURL('image/png');
-                const link = document.createElement('a');
-                link.download = '花精日记_' + new Date().toISOString().slice(0,10) + '.png';
-                link.href = image;
-                link.click();
-                
-                alert('✅ 图片已生成，请查看下载文件夹');
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            }).catch(err => {
-                // 5. 明确显示错误
-                console.error('html2canvas 错误:', err);
-                alert('❌ 生成失败，错误信息已打印到控制台 (F12 → Console)');
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            });
-        } catch (err) {
-            // 6. 捕获同步错误
-            alert('❌ 执行出错: ' + err.message);
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        }
+    const element = document.getElementById('snapshotCard');
+    const btn = document.getElementById('saveBtn');
+    
+    if (!element) {
+        alert('错误：找不到卡片');
+        return;
+    }
+    
+    if (!window.html2canvas) {
+        alert('错误：html2canvas 未加载');
+        return;
     }
 
-    async function shareImage() {
-        if (!generatedImageURL) {
-            alert('请先生成图片哦~');
-            return;
-        }
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '⏳ 生成中...';
+    btn.disabled = true;
 
-        try {
-            const response = await fetch(generatedImageURL);
-            const blob = await response.blob();
-            const file = new File([blob], "芬芳时_花精日记.png", { type: "image/png" });
-
-            if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-                await navigator.share({
-                    title: '芬芳时·花精日记',
-                    text: '这是我今日的花精觉察日记 🌿',
-                    files: [file]
-                });
-            } else {
-                try {
-                    const item = new ClipboardItem({ "image/png": blob });
-                    await navigator.clipboard.write([item]);
-                    alert('📋 图片已复制到剪贴板！您可以粘贴到微信或相册。');
-                } catch (clipErr) {
-                    alert('📥 无法自动分享，请在浏览器中长按图片，选择“保存到相册”。');
-                    window.open(generatedImageURL, '_blank');
-                }
-            }
-        } catch (err) {
-            console.log('分享失败', err);
-            alert('分享失败，请手动保存图片。');
-            window.open(generatedImageURL, '_blank');
+    html2canvas(element, {
+        scale: 2,
+        backgroundColor: '#ffffff',
+        useCORS: true
+    }).then(canvas => {
+        // 把 canvas 转成图片，在新窗口打开
+        const image = canvas.toDataURL('image/png');
+        const newWindow = window.open();
+        if (newWindow) {
+            newWindow.document.write(`
+                <html>
+                    <head><title>长按保存图片</title></head>
+                    <body style="margin:0; display:flex; justify-content:center; align-items:center; background:#f0f0f0;">
+                        <img src="${image}" style="max-width:100%; max-height:100vh; object-fit:contain;" />
+                        <p style="position:fixed; bottom:20px; left:0; right:0; text-align:center; color:#666;">
+                            👆 长按图片选择「保存到相册」
+                        </p>
+                    </body>
+                </html>
+            `);
+        } else {
+            // 如果浏览器阻止了弹窗，就用下载方式
+            const link = document.createElement('a');
+            link.download = '花精日记.png';
+            link.href = image;
+            link.click();
+            alert('图片已下载，请到「文件管理-下载」文件夹找，然后手动移入相册');
         }
-    }
+        
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }).catch(err => {
+        console.error(err);
+        alert('生成失败，请重试');
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    });
+}
 </script>
 </body>
 </html>
