@@ -487,16 +487,22 @@
                     <div class="snapshot-input" id="inputReflection" contenteditable="true"></div>
                 </div>
 
-                <div class="snapshot-footer">
-                    💡 <strong>操作指南：</strong> 直接在虚线处点击输入文字，支持回车换行。点击粉色按钮生成完美图片~
+                              <div class="snapshot-row">
+                    <label class="snapshot-label">使用后的感受 (Reflection)</label>
+                    <div class="snapshot-input" id="inputReflection" contenteditable="true"></div>
                 </div>
 
+                <!-- 版权信息保留在卡片内（会被截图） -->
                 <div class="snapshot-footer">© 『芬芳时』花精与生活社群 | 愿你每一天都和自己在一起</div>
-            </div>
+            </div>  <!-- 这是 snapshot-area 的结束 -->
+        </div>  <!-- 这是 snapshot-wrapper 的结束 -->
+
+        <!-- 操作指南移到卡片外面（只在网页显示，不会被截图） -->
+        <div class="snapshot-footer">
+            💡 <strong>操作指南：</strong> 直接在虚线处点击输入文字，支持回车换行。点击粉色按钮生成完美图片~
         </div>
         
         <div class="action-buttons">
-            <!-- 这一行是关键：onclick 里面只有 downloadSnapshot()，没有多余的东西 -->
             <button class="save-btn" id="saveBtn" onclick="downloadSnapshot()">
                 <span>💾</span> 存入我的情绪日记
             </button>
@@ -504,8 +510,7 @@
                 <span>📱</span> 一键分享
             </button>
         </div>
-    </div>
-
+    </div>  <!-- 这是 snapshot-section 的结束 -->
     <footer><p>© 『芬芳时』花精与生活社群 | 愿你每一天都和自己在一起</p></footer>
 </div>
 
