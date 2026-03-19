@@ -188,7 +188,7 @@
         /* 信件正文内容 - 调大字体 */
         .letter-content { 
             font-family: "Kaiti", "STKaiti", serif; 
-            font-size: 1.4em;  /* 从1.05调大到1.2 */
+            font-size: 1.2em;  /* 从1.05调大到1.2 */
             color: #444; 
             line-height: 2; 
             position: relative; 
@@ -253,7 +253,7 @@
             overflow: hidden;
         }
         .happiness-icon {
-            font-size: 3.8em;
+            font-size: 3.5em;
             flex-shrink: 0;
             animation: spin-slow 10s infinite linear;
         }
@@ -634,4 +634,11 @@
                 await navigator.clipboard.write([item]);
                 alert('📋 图片已复制到剪贴板！您可以粘贴到微信或相册。');
             } catch (err) {
-                alert('📥 无法
+                alert('📥 无法自动分享，请在浏览器中长按图片，选择“保存到相册”。');
+                window.open(generatedImageURL, '_blank');
+            }
+        }
+    }
+</script>
+</body>
+</html>
